@@ -1,4 +1,5 @@
 package com.ayanami.aop;
+import com.ayanami.mapper.EmpMapper;
 import com.ayanami.mapper.OperateLogMapper;
 import com.ayanami.pojo.OperateLog;
 import com.ayanami.utils.CurrentHolder;
@@ -18,6 +19,8 @@ public class OperationLogAspect {
 
     @Autowired
     private OperateLogMapper operateLogMapper;
+    @Autowired
+    private EmpMapper empMapper;
 
     // 环绕通知
     @Around("@annotation(com.ayanami.anno.Log)")
@@ -35,11 +38,14 @@ public class OperationLogAspect {
         OperateLog operateLog = new OperateLog();
         operateLog.setOperateEmpId(getCurrentUserId()); // 需要实现 getCurrentUserId 方法
         operateLog.setOperateTime(LocalDateTime.now());
-        operateLog.setClassName(joinPoint.getTarget().getClass().getName());
+        operateLog.setClassName(joinPoint.getTarget().getClass().getName());//getTarger:获取被代理的目标对象
         operateLog.setMethodName(joinPoint.getSignature().getName());
         operateLog.setMethodParams(Arrays.toString(joinPoint.getArgs()));
         operateLog.setReturnValue(result.toString());
         operateLog.setCostTime(costTime);
+        operateLog.setOperateEmpName(getCurrentUserName(operateLog.getOperateEmpId()));
+
+
 
         log.info("记录操作日志：{}",operateLog);
         // 插入日志
@@ -47,8 +53,17 @@ public class OperationLogAspect {
         return result;
     }
 
-    // 示例方法，获取当前用户ID
+    private String getCurrentUserName(Integer operateEmpId) {
+        String currentName = empMapper.getById(operateEmpId).getUsername();
+        return currentName;
+
+    }
+
+
+    // 获取当前用户ID
     private int getCurrentUserId() {
         return CurrentHolder.getCurrentId();
     }
+
+
 }

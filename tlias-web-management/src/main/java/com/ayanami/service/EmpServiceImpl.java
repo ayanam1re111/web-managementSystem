@@ -52,8 +52,9 @@ public class EmpServiceImpl implements EmpService {
         //1. 设置分页参数
         PageHelper.startPage(empQueryParam.getPage(),empQueryParam.getPageSize());
         //2. 执行查询
-        List<Emp> empList = empMapper.list(empQueryParam);
-        Page<Emp> p = (Page<Emp>) empList;//empList经过pagehelper操作实际类型就是Page，只是声明类型还是List,需要通过强转告诉编译器
+        List<Emp> empList = empMapper.list(empQueryParam);//MyBatis规定接口中查询方法返回值只能声明为标准JAV集合/类型
+        Page<Emp> p = (Page<Emp>) empList;//当你执行 PageHelper.startPage() 后，Mapper 查询返回的实际对象是 Page 实例，只是被「向上转型」为 List 类型（父类引用指向子类对象）。
+        //所以强转本质是「把父类引用转回子类类型」
 
         //3. 封装结果
         return new PageResult<Emp>(p.getTotal(), p.getResult());

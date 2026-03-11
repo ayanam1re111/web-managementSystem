@@ -17,6 +17,7 @@ import java.util.List;
 @Service
 public class ClazzServiceImpl implements ClazzService{
 
+
     @Autowired
     private ClazzMapper clazzMapper;
 
@@ -87,9 +88,16 @@ public class ClazzServiceImpl implements ClazzService{
             throw new NumException("对不起，该班级下学生数大于0，无法删除");
         }
         clazzMapper.delete(id);
+    }
 
-
-
+    /**
+     * 查询所有班级列表
+     * @return
+     */
+    @Override
+    public List<Clazz> list() {
+        List<Clazz> clz=clazzMapper.listAll();
+        return clz ;
     }
 
     }

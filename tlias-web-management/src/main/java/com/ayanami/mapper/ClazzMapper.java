@@ -53,4 +53,12 @@ public interface ClazzMapper {
      */
     @Delete("delete from clazz where id=#{id}")
     void delete(Integer id);
+
+
+    /**
+     * 查询班级全部列表
+     * @return
+     */
+    @Select("select * from clazz")
+    List<Clazz> listAll();
 }

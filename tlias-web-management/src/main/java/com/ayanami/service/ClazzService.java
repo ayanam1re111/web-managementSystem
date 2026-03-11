@@ -4,6 +4,8 @@ import com.ayanami.pojo.Clazz;
 import com.ayanami.pojo.ClazzQueryParam;
 import com.ayanami.pojo.ClazzResult;
 
+import java.util.List;
+
 public interface ClazzService {
     ClazzResult<Clazz> page(ClazzQueryParam clazzQueryParam);
 
@@ -14,4 +16,6 @@ public interface ClazzService {
     void update(Clazz clazz);
 
     void delete(Integer id);
+
+    List<Clazz> list();
 }

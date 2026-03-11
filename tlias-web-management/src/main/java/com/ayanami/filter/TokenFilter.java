@@ -60,9 +60,11 @@ public class TokenFilter implements Filter {
 
         //6. 放行。
         log.info("令牌合法, 放行");
-        chain.doFilter(request , response);
+        try{
+        chain.doFilter(request , response);}
+        finally{//finally：无论是否异常最终都会执行remove
         //7.删除threadlocal中的数据
-        CurrentHolder.remove();
+        CurrentHolder.remove();}
     }
 
 
