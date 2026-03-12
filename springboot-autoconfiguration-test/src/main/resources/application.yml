@@ -1,6 +1,0 @@
-#阿里云OSS
-aliyun:
-  oss:
-    endpoint: https://oss-cn-beijing.aliyuncs.com
-    bucketName: tlias-system22
-    region: cn-beijing
