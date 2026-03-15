@@ -18,10 +18,11 @@ public class JwtUtils {
      * @return
      */
     public static String generateJwt(Map<String,Object> claims){
+        long expireTime = System.currentTimeMillis() + expire;
         String jwt = Jwts.builder()
                 .addClaims(claims)
                 .signWith(SignatureAlgorithm.HS256, signKey)
-                .setExpiration(new Date(System.currentTimeMillis() + expire))
+                .setExpiration(new Date(expireTime))
                 .compact();
         return jwt;
     }

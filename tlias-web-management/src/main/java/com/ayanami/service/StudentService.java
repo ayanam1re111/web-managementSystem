@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface StudentService{
     PageResult<Student> list(StudentQueryParam studentQueryParam);
+
+    void add(Student student);
 }
